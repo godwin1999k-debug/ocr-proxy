@@ -11,7 +11,13 @@ app.get("/proxy", async (req, res) => {
   if (!url) return res.status(400).send("No URL");
 
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      headers: {
+        "User-Agent": "Mozilla/5.0",
+        "Accept": "*/*"
+      }
+    });
+
     const buffer = await response.arrayBuffer();
 
     res.set("Content-Type", response.headers.get("content-type"));
